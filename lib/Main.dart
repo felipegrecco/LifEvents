@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'PaginaInicial.dart';
+import 'package:intl/date_symbol_data_local.dart'; // Importe esta linha
 
 void main() {
+  initializeDateFormatting('pt_BR', null);
   runApp(const MyApp());
 }
 
