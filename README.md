@@ -4,12 +4,12 @@
 This Flutter app is designed for efficient task management, helping users organize their daily activities seamlessly. With an intuitive interface, users can create, edit, and manage tasks effortlessly.
 
 ## Features
-Task Creation: Quickly add new tasks with a simple and user-friendly interface.
-Task Details: View and edit task details such as title, due date, priority, and notes.
-Prioritization: Assign priority levels to tasks for better organization.
-Completion Tracking: Mark tasks as completed to keep track of your progress.
-Task Sorting: Sort tasks based on due date, priority, or completion status.
-Reminders: Set reminders for important tasks to stay on top of deadlines.
+- Task Creation: Quickly add new tasks with a simple and user-friendly interface.
+- Task Details: View and edit task details such as title, due date, priority, and notes.
+- Prioritization: Assign priority levels to tasks for better organization.
+- Completion Tracking: Mark tasks as completed to keep track of your progress.
+- Task Sorting: Sort tasks based on due date, priority, or completion status.
+- Reminders: Set reminders for important tasks to stay on top of deadlines.
 
 ## Dependencies
 - Flutter: https://flutter.dev/
