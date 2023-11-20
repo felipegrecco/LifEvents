@@ -18,8 +18,8 @@ class _CheckButtonState extends State<CheckButton> {
           });
         },
         child: Container(
-          width: 30.0,
-          height: 30.0,
+          width: 28.0,
+          height: 28.0,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xFF38A3A5)),
             borderRadius: BorderRadius.circular(8.0),

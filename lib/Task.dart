@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
-
 class Task {
+  int id;
   String nome;
   DateTime data;
-  TimeOfDay horaInicio, horaFim;
   int prioridade;
 
   Task({
+    required this.id,
     required this.nome,
-    required this.horaInicio,
-    required this.horaFim,
     required this.data,
     required this.prioridade,
   });
