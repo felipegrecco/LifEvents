@@ -51,14 +51,39 @@ class _LembretesPageState extends State<LembretesPage> {
           Expanded(
             child: tasks.isEmpty
                 ? Center(
-                    child: Text("Sem tarefas no momento!",
+                    child: Column(children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    SizedBox(
+                      width: 350,
+                      height: 40,
+                      child: Text(
+                        'Nada por enquanto...',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black.withOpacity(0.699999988079071),
+                          color: Colors.black.withOpacity(0.49000000953674316),
                           fontSize: 24,
                           fontFamily: 'Varela Round',
-                          fontWeight: FontWeight.w500,
-                        )),
-                  )
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 36,
+                    ),
+                    Container(
+                      width: 361,
+                      height: 312,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/done.png'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    )
+                  ]))
                 : ListView.builder(
                     padding: EdgeInsets.only(top: 20),
                     itemCount: tasks.length,
@@ -80,7 +105,7 @@ class _LembretesPageState extends State<LembretesPage> {
                             ),
                           ],
                         ),
-                        height: 90,
+                        height: 100,
                         width: 355,
                         child: Container(
                           padding: EdgeInsets.only(left: 17, top: 13),
@@ -172,7 +197,7 @@ class _LembretesPageState extends State<LembretesPage> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 14.5,
+                                          width: 7.5,
                                         )
                                       ],
                                     ))
@@ -233,10 +258,8 @@ class _LembretesPageState extends State<LembretesPage> {
         return Colors.yellow;
       case 3:
         return Colors.blue;
-      case 4:
-        return Colors.grey;
       default:
-        return Colors.white;
+        return Colors.grey;
     }
   }
 }
