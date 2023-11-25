@@ -28,7 +28,7 @@ class _CheckButtonState extends State<CheckButton> {
                 : Colors.white,
           ),
           child: isChecked
-              ? Icon(
+              ? const Icon(
                   Icons.check,
                   color: Colors.white,
                 )

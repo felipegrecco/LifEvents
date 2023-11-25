@@ -6,6 +6,9 @@ import 'package:lifevents/Task.dart';
 import 'CheckButton.dart';
 import 'CreateTask.dart';
 
+import 'abc.dart';
+import 'dart:convert';
+
 class LembretesPage extends StatefulWidget {
   const LembretesPage({super.key});
 
@@ -16,6 +19,7 @@ class LembretesPage extends StatefulWidget {
 class _LembretesPageState extends State<LembretesPage> {
   int _taskIdCounter = 1;
   List<Task> tasks = [];
+  abc db = abc();
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +109,7 @@ class _LembretesPageState extends State<LembretesPage> {
                             ),
                           ],
                         ),
-                        height: 100,
+                        height: 120,
                         width: 355,
                         child: Container(
                           padding: EdgeInsets.only(left: 17, top: 13),
@@ -141,27 +145,8 @@ class _LembretesPageState extends State<LembretesPage> {
                                   ))
                                 ]),
                                 SizedBox(
-                                  height: 12,
+                                  height: 7,
                                 ),
-                                /*Row(
-                            children: [
-                              Image.asset('assets/images/clock.png'),
-                              SizedBox(width: 9),
-                              Text(
-                                "${timeToString(tasks[index].horaInicio, context)} - ${timeToString(tasks[index].horaFim, context)}",
-                                style: TextStyle(
-                                  color: Colors.black
-                                      .withOpacity(0.699999988079071),
-                                  fontSize: 16,
-                                  fontFamily: 'Varela Round',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              ),
-                              SizedBox(width: 180),
-                              CheckButton()
-                            ],
-                          ),*/
                                 Row(
                                   children: [
                                     Image.asset('assets/images/calendar.png'),
@@ -176,6 +161,26 @@ class _LembretesPageState extends State<LembretesPage> {
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  children: [
+                                    Image.asset('assets/images/clock.png'),
+                                    SizedBox(width: 9),
+                                    Text(
+                                      "${tasks[index].horaInicio} - ${tasks[index].horaFim}",
+                                      style: TextStyle(
+                                        color: Colors.black
+                                            .withOpacity(0.699999988079071),
+                                        fontSize: 16,
+                                        fontFamily: 'Varela Round',
+                                        fontWeight: FontWeight.w400,
+                                        height: 0,
+                                      ),
+                                    ),
                                     Expanded(
                                         child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -188,6 +193,7 @@ class _LembretesPageState extends State<LembretesPage> {
                                           onPressed: () {
                                             setState(() {
                                               tasks.removeAt(index);
+                                              db.saveData(tasks);
                                             });
                                           },
                                           child: Icon(
@@ -210,44 +216,63 @@ class _LembretesPageState extends State<LembretesPage> {
                   ),
           ),
           SizedBox(
-            height: 25,
+            height: 20,
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(15),
-              backgroundColor: Color(0xFF38A3A5),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateTask(
-                    onAdd: (newTask) {
-                      setState(() {
-                        newTask.id = _taskIdCounter++;
-                        tasks.add(newTask);
-                        tasks.sort((a, b) => a.data.compareTo(b.data));
-                      });
-                    },
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(15),
+                backgroundColor: Color(0xFF38A3A5),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateTask(
+                      onAdd: (newTask) {
+                        setState(() {
+                          newTask.id = _taskIdCounter++;
+                          tasks.add(newTask);
+                          tasks.sort((a, b) => a.data.compareTo(b.data));
+                          db.saveData(tasks);
+                        });
+                      },
+                    ),
                   ),
-                ),
-              );
-            },
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 35,
+                );
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 35,
+              ),
             ),
-          ),
+            SizedBox(
+              width: 25,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(15),
+                backgroundColor: Color(0xFF38A3A5),
+              ),
+              onPressed: () {
+                setState(() {
+                  tasks = tasks.reversed.toList();
+                });
+              },
+              child: Icon(
+                Icons.arrow_downward,
+                color: Colors.white,
+                size: 35,
+              ),
+            ),
+          ]),
           SizedBox(
-            height: 25,
+            height: 20,
           )
         ]));
-  }
-
-  String timeToString(TimeOfDay time, BuildContext context) {
-    return time.format(context);
   }
 
   Color corPrioridade(int prioridade) {
@@ -261,5 +286,18 @@ class _LembretesPageState extends State<LembretesPage> {
       default:
         return Colors.grey;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    db.readData().then(
+      (data) {
+        setState(() {
+          tasks = json.decode(data!);
+        });
+      },
+    );
   }
 }

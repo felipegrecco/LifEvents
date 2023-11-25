@@ -17,6 +17,9 @@ class CreateTask extends StatefulWidget {
 class _CreateTaskState extends State<CreateTask> {
   DateTime selectedDate = DateTime.now();
   TextEditingController _titleController = TextEditingController();
+  TextEditingController horaStart = TextEditingController();
+  TextEditingController horaEnd = TextEditingController();
+
   int numPrioridade = 0;
   int _taskIdCounter = 1;
 
@@ -54,7 +57,7 @@ class _CreateTaskState extends State<CreateTask> {
             Text("Vamos criar uma nova tarefa!",
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.699999988079071),
-                  fontSize: 24,
+                  fontSize: 22,
                   fontFamily: 'Varela Round',
                   fontWeight: FontWeight.w500,
                 )),
@@ -91,11 +94,44 @@ class _CreateTaskState extends State<CreateTask> {
               }),
             ),
             SizedBox(
-              height: 25,
+              height: 20,
+            ),
+            TextFormField(
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.datetime,
+              controller: horaStart,
+              decoration: InputDecoration(
+                  labelText: 'Horário de início',
+                  border: OutlineInputBorder(borderSide: BorderSide()),
+                  fillColor: Colors.white),
+              style: TextStyle(
+                fontFamily: 'Varela Round',
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.datetime,
+              controller: horaEnd,
+              decoration: InputDecoration(
+                  labelText: 'Horário de fim',
+                  border: OutlineInputBorder(borderSide: BorderSide()),
+                  fillColor: Colors.white),
+              style: TextStyle(
+                fontFamily: 'Varela Round',
+              ),
+            ),
+            SizedBox(
+              height: 35,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     padding: EdgeInsets.all(15),
                     backgroundColor: Color(0xFF38A3A5)),
                 onPressed: () {
@@ -108,7 +144,6 @@ class _CreateTaskState extends State<CreateTask> {
                     fontSize: 17,
                     fontFamily: 'Varela Round',
                     fontWeight: FontWeight.w400,
-                    height: 0,
                   ),
                 ),
               ),
@@ -118,17 +153,21 @@ class _CreateTaskState extends State<CreateTask> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
-                    padding: EdgeInsets.all(18),
+                    padding: EdgeInsets.all(20),
                     backgroundColor: Colors.green,
                   ),
                   onPressed: () {
                     widget.onAdd((Task(
-                        id: _taskIdCounter++,
-                        nome: _titleController.text.isNotEmpty
-                            ? _titleController.text
-                            : 'Nova Tarefa',
-                        data: selectedDate,
-                        prioridade: numPrioridade)));
+                      id: _taskIdCounter++,
+                      nome: _titleController.text.isNotEmpty
+                          ? _titleController.text
+                          : 'Nova Tarefa',
+                      data: selectedDate,
+                      prioridade: numPrioridade,
+                      horaInicio:
+                          horaStart.text.isNotEmpty ? horaStart.text : '',
+                      horaFim: horaEnd.text.isNotEmpty ? horaEnd.text : '',
+                    )));
                     Navigator.pop(context);
                   },
                   child: Icon(
@@ -137,12 +176,12 @@ class _CreateTaskState extends State<CreateTask> {
                   ),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 25,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
-                      padding: EdgeInsets.all(18),
+                      padding: EdgeInsets.all(20),
                       backgroundColor: Colors.red,
                     ),
                     child: Icon(
@@ -163,6 +202,7 @@ class _CreateTaskState extends State<CreateTask> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           title: Text('Selecione uma prioridade'),
           children: [
             SimpleDialogOption(
