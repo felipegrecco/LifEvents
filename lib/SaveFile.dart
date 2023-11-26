@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
-class ab {
+class SaveFile {
   Future<File> _getFile() async {
     final directory = await getApplicationDocumentsDirectory();
     print(directory);
