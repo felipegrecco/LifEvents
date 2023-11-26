@@ -73,9 +73,6 @@ class _LembretesPageState extends State<LembretesPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 36,
-                    ),
                     Container(
                       width: 361,
                       height: 312,
