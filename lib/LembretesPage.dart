@@ -108,7 +108,7 @@ class _LembretesPageState extends State<LembretesPage> {
                             ),
                           ],
                         ),
-                        height: 120,
+                        height: 135,
                         width: 355,
                         child: Container(
                           padding: EdgeInsets.only(left: 17, top: 13),
